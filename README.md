@@ -68,7 +68,7 @@ git clone
 ---
 
 ### 2️⃣ Setup Backend
-
+lib: express cors mongoose  dotenv
 cd backend
 npm install
 Create `.env` file inside backend:
