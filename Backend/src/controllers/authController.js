@@ -125,3 +125,28 @@ export const SignIn = async (req, res) => {
     });
   }
 };
+
+export const SignOut = async (req, res) => {
+  try {
+    // lấy refresh token tu cookie
+    const token = req.cookie?.refreshToken;
+    if (token) {
+      // xóa refresh token trong Session
+      await Session.deleteOne({ refreshToken: token });
+
+      // xóa cookie
+      res.clearCookie("refreshToken", {
+        httpOnly: true,
+        secure: false,
+        sameSite: "none", 
+      });
+
+      return res.sendStatus(204);
+    }
+  } catch (error) {
+    console.error("Logout error: ", error);
+    return res.status(500).json({
+      message: "Lỗi hệ thống.",
+    });
+  }
+};
